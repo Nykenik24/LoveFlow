@@ -28,7 +28,7 @@ local function Alphabet()
 end
 
 ---Generates a random 8-character ID
----@return number
+---@return string ID
 function GenerateID()
 	local chars = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
 	for _, letter in ipairs(Alphabet()) do
