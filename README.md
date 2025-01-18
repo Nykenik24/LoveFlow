@@ -87,6 +87,33 @@ This section explains each one of them:
 - Listens to events in an event bus.
 
 ![EDA Example](images/EDA_example.png)
+<details>
+<summary>Code</summary>
+
+```lua
+local loveflow = require("loveflow")
+local arch = loveflow.newArch()
+
+-- ## Create all nodes ## --
+-- publishers --
+local pub_a = arch.bus:newPublisher()
+local pub_b = arch.bus:newPublisher()
+
+-- subscribers --
+local sub_a = arch.bus:newSubscriber():subscribe(pub_a)
+local sub_b = arch.bus:newSubscriber():subscribe(pub_b)
+local sub_c = arch.bus:newSubscriber():subscribe(pub_a):subscribe(pub_b)
+
+-- listener --
+local listener = arch.bus:newListener()
+
+-- ## Publish and broadcast ## --
+pub_a:publish("Event A")
+pub_b:publish("Event B")
+arch.bus:broadcast("broadcast")
+```
+</details>
+
 # More about EDA
 ## What is EDA?
 *[src: Geeks For Geeks article on EDA](https://www.geeksforgeeks.org/event-driven-architecture-system-design/)*
