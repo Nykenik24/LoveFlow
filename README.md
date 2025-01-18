@@ -1,7 +1,5 @@
 # LoveFlow
-LoveFlow is an Event-Driven Architecture (EDA) implementation inside Love2d. LoveFlow allows for flexible customization of a message bus, controllable event handlers, publisher-subscriber systems and
-
-LoveFlow is an implementation of Event-Driven Architecture inside the [Love2d game framework](https://love2d.org).
+LoveFlow is an Event-Driven Architecture (EDA) implementation inside Love2d. LoveFlow allows for flexible customization of a message bus, controllable event handlers, publisher-subscriber systems and more.
 
 #### _LoveFlow is currently work in progress, in a alpha state, waiting for more releases/updates is recommended_
 
