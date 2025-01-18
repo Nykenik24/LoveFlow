@@ -37,6 +37,7 @@ end
 Now you can publish events:
 ```lua
 pub:publish("Hello, World!")
+pub:publish({msg = "Hello, World!", some_var = 5})
 ```
 Subscribe to publishers:
 ```lua
