@@ -61,7 +61,33 @@ You can also broadcast events through `bus:broadcast`
 arch.bus:broadcast("DOOM!? Here in New York!?")
 print(sub:getLastBroadcast(arch.bus))
 ```
+## Nodes
+Nodes in LoveFlow are:
+- Publishers.
+- Subscribers.
+- Event buses.
+- Listeners.
 
+This section explains each one of them:
+### Event bus *(or event broker)*
+---
+- Handles the event pool.
+- Can broadcast events to all subscribers.
+### Publisher
+---
+- Sends events. 
+- Subscribers can suscribe to them to receive all published events.
+### Subscriber
+---
+- Receives events.
+- Can subscribe to publishers.
+- Can get broadcasts.
+### Listener
+---
+- Listens to events in an event bus.
+
+![EDA Example](images/EDA_example.png)
+# More about EDA
 ## What is EDA?
 *[src: Geeks For Geeks article on EDA](https://www.geeksforgeeks.org/event-driven-architecture-system-design/)*
 
@@ -72,6 +98,7 @@ With event-driven architecture (EDA), various system components communicate with
 Event-driven architecture inside your game allows for a very flexible game event system, allowing for modularity and control of internal game events.
 
 LoveFlow implements a simple EDA system that allows to quickly setup publishers, subscribers, event handlers, etc. in a fast and easy manner.
+
 
 
 
