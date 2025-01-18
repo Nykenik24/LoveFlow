@@ -9,6 +9,7 @@ local pub = {}
 ---@return LoveFlow.Publisher
 function pub.new(event_bus, alias)
 	---@class LoveFlow.Publisher
+	---@field id string
 	local new_pub = {
 		alias = alias or nil,
 		id = GenerateID(),
@@ -16,8 +17,10 @@ function pub.new(event_bus, alias)
 		---Publish an event.
 		---@param self LoveFlow.Publisher
 		---@param content any
+		---@return LoveFlow.Publisher Self For chaining
 		publish = function(self, content)
 			table.insert(self.parent_bus.pool[self.id], content)
+			return self
 		end,
 		---Update the parent event bus. Called inside Arch:updateAll()
 		---@param self LoveFlow.Publisher

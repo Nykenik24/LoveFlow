@@ -52,11 +52,17 @@ function sub.new(event_bus, alias)
 		getLastBroadcast = function(bus)
 			return bus.pool.broadcasts:last()
 		end,
+		---Subscribe to a publisher.
+		---@param self LoveFlow.Subscriber
+		---@param pub LoveFlow.Publisher|string Publisher or Publisher ID
+		---@return LoveFlow.Subscriber Self For chaining
 		subscribe = function(self, pub)
 			if type(pub) == "table" then
 				table.insert(self.subbed_to, pub.id)
+				return self
 			elseif type(pub) == "string" then
 				table.insert(self.subbed_to, pub)
+				return self
 			else
 				error("pub has to be publisher id or publisher")
 			end
