@@ -1,17 +1,71 @@
 # LoveFlow
 LoveFlow is an Event-Driven Architecture (EDA) implementation inside Love2d. LoveFlow allows for flexible customization of a message bus, controllable event handlers, publisher-subscriber systems and more.
 
-#### _LoveFlow is currently work in progress, in a alpha state, waiting for more releases/updates is recommended_
+# Installation
+To install LoveFlow, follow this steps:
+
+1. Clone or add as a submodule:
+```bash
+git clone https://github.com/Nykenik24/LoveFlow.git path/to/loveflow
+# or
+git submodule add https://github.com/Nykenik24/LoveFlow.git path/to/loveflow
+```
+2. Require loveflow
+```lua
+local loveflow = require("path.to.loveflow")
+```
+
+# Usage
+After installing LoveFlow, you need to **create an architecture**:
+```lua
+local loveflow = require("loveflow")
+local arch = loveflow.newArch()
+```
+Then create your publishers and subscribers
+```lua
+--...
+local pub = arch.bus:newPublisher()
+local sub = arch.bus:newSubscriber()
+```
+And finally update your architecture in `love.update`
+```lua
+function love.update(dt)
+	arch:updateAll()
+end	
+```
+
+Now you can publish events:
+```lua
+pub:publish("Hello, World!")
+```
+Subscribe to publishers:
+```lua
+sub:subscribe(pub)
+-- or
+sub:subscribe(pub.id)
+```
+And handle events manually or with `subscriber:handleEvents`:
+```lua
+sub:handleEvents(arch.bus, function(self, event)
+	--...
+end)
+-- or manually
+local sub_events = sub:getEvents()
+for id, event in pairs(sub_events) do
+	--...
+end	
+```
+You can also broadcast events through `bus:broadcast`
+```lua
+arch.bus:broadcast("DOOM!? Here in New York!?")
+print(sub:getLastBroadcast(arch.bus))
+```
 
 ## What is EDA?
 *[src: Geeks For Geeks article on EDA](https://www.geeksforgeeks.org/event-driven-architecture-system-design/)*
 
-With event-driven architecture (EDA), various system components communicate with one another by generating, identifying, and reacting to events.
-
-<details>
-<summary>Full EDA Definition</summary>
 With event-driven architecture (EDA), various system components communicate with one another by generating, identifying, and reacting to events. These events can be important happenings, like user actions or changes in the system's state. In EDA, components are independent, meaning they can function without being tightly linked to one another. When an event takes place, a message is dispatched, prompting the relevant components to respond accordingly. This structure enhances flexibility, scalability, and real-time responsiveness in systems.
-</details>
+
 
 ## Why is EDA useful?
 Event-driven architecture inside your game allows for a very flexible game event system, allowing for modularity and control of internal game events.
