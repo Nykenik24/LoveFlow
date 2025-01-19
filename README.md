@@ -61,8 +61,8 @@ You can also broadcast events through `bus:broadcast`
 arch.bus:broadcast("DOOM!? Here in New York!?")
 print(sub:getLastBroadcast(arch.bus))
 ```
-## Nodes
-Nodes in LoveFlow are:
+## Components
+Components in LoveFlow are:
 - Publishers.
 - Subscribers.
 - Event buses.
