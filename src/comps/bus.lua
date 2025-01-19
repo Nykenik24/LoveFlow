@@ -14,7 +14,6 @@ function bus.new()
 		subs = {},
 		pubs = {},
 		pool = {
-			pop = Pop,
 			broadcasts = {
 				last = function(self)
 					return self[#self]
@@ -32,6 +31,7 @@ function bus.new()
 		newSubscriber = require("src.comps.subscriber").new,
 		newListener = require("src.comps.listener").new,
 		broadcast = function(self, content)
+			content._isBroadcast = true -- to check if an event is a broadcast in your event handlers
 			table.insert(self.pool.broadcasts, content)
 			return content
 		end,
