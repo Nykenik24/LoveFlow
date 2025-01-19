@@ -19,7 +19,7 @@ function pub.new(event_bus, alias)
 		---@param content any
 		---@return LoveFlow.Publisher Self For chaining
 		publish = function(self, content)
-			table.insert(self.parent_bus.pool[self.id], content)
+			table.insert(self.parent_bus.pool[self.id], 1, content)
 			return self
 		end,
 		---Update the parent event bus. Called inside Arch:updateAll()
