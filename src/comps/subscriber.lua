@@ -36,8 +36,18 @@ function sub.new(event_bus, alias)
 				error("No handler")
 			end
 			local events = self:getEvents(bus)
+			local function handle(content)
+				if type(content) ~= "function" then
+					if handler(self, content) == false then
+						return false
+					end
+				end
+			end
 			for _, content in pairs(events) do
-				handler(self, content)
+				handle(content)
+			end
+			for _, broadcast in pairs(self.getBroadcasts(bus)) do
+				handle(broadcast)
 			end
 		end,
 		---Get all broadcasts (events for all subscribers).
