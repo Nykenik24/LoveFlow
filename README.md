@@ -114,6 +114,64 @@ arch.bus:broadcast("broadcast")
 ```
 </details>
 
+# Recomended usage
+LoveFlow is made to be as customizable and flexible as possible, handlers and events are completely custom.
+
+But, there is a recommended workflow i suggest you to follow if you want good event handling.
+
+
+## `event.type`
+You can add a variable called `type` to your events for subscribers to know what to do for every type of event.
+```lua
+-- enemy.flow is the publisher
+-- player.flow is the subscriber
+
+enemy.flow:publish({
+	type = "attackPlayer",
+	dmg = enemy.dmg, -- damage
+	in_range = enemy:inAttackRange(player)
+})
+
+player.flow:handleEvents(bus, function(_, event)
+	if event.type == "attackPlayer" then
+		if event.in_range then 
+			player:takeDamage(event.dmg) 
+		end	
+	elseif event.type == "onDeath" then
+		player:respawnOnLastCheckpoint()
+	end
+end)
+```
+**Note**: I recommend having some function that handles all the event types instead of a chain of `if` and `elseif`.
+
+## Always make events tables
+Tables are the way to go when making your events, they allow for easy storage of all the information you need, a type variable, etc.
+
+If you used strings, then using an event bus instead of a message bus would be dumb. If you used numbers then... What would you really be able to do? If you used booleans then you would have less possibilites than with numbers. 
+
+Functions aren't possible to use because the library discards functions when getting and handling events to avoid passing `last` or any other internal method. If you want to use functions, you could store them in a table and use them like `event[1](...)` or `event.func(...)`.
+
+## Use broadcasts only when necessary
+Broadcasts are really useful when you need all subscribers to do something, like a `quit` event that makes all subscribers save their state in the save file before the game is closed.
+
+But if you need a group of subscribers to respond to one source of events, just subscribe them to that source. You can make a publisher have multiple subscribers and viceversa. 
+
+Broadcasts go to all subscribers so you could break something if not careful when using them.
+
+## Use publisher and subscriber alias if you need them
+When calling `newSubscriber` and `newPublisher` there is an optional argument: `alias`. Alias is a string that allows you to find a subscriber/publisher inside the bus without having to know the ID.
+
+To find a publisher/subscriber by alias, use the bus methods `findPublisherByAlias` and `findSubscriberByAlias`, this methods will return the publisher/subscriber and their id (publisher) or index (subscriber).
+
+If you use alias, make them as short and understandable as possible. If your publisher takes as a source the player inputs, you can use the alias `Input handler`, `Input publisher` or just `Input`. 
+
+## Use listeners instead of subscribers when needed
+If you need something that takes all events, but don't want to create a new subscriber or use one that isn't really related or important, use *listeners*.
+
+Listeners take all events from all sources of an event bus and handles them with the function you provide. 
+
+These are useful when you want something that takes all events sent and have too many publishers to make a subscriber that's takes events from every publisher.
+
 # More about EDA
 ## What is EDA?
 *[src: Geeks For Geeks article on EDA](https://www.geeksforgeeks.org/event-driven-architecture-system-design/)*
