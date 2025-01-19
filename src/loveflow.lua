@@ -1,4 +1,4 @@
-local bus = require("src.nodes.bus")
+local bus = require("src.comps.bus")
 
 ---@class LoveFlow
 local loveflow = {}
