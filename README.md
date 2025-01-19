@@ -94,7 +94,7 @@ This section explains each one of them:
 local loveflow = require("loveflow")
 local arch = loveflow.newArch()
 
--- ## Create all nodes ## --
+-- ## Create all comps ## --
 -- publishers --
 local pub_a = arch.bus:newPublisher()
 local pub_b = arch.bus:newPublisher()
