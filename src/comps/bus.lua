@@ -1,3 +1,5 @@
+require("src.global")
+
 require("src.utils")
 
 ---@class LoveFlow.EventBus.Internal
@@ -31,8 +33,14 @@ function bus.new()
 		newSubscriber = require("src.comps.subscriber").new,
 		newListener = require("src.comps.listener").new,
 		broadcast = function(self, content)
-			content._isBroadcast = true -- to check if an event is a broadcast in your event handlers
+			if type(content) == "table" then
+				content._isBroadcast = true -- to check if an event is a broadcast in your event handlers
+			end
 			table.insert(self.pool.broadcasts, content)
+
+			if SHOW_DEBUG_INFO then
+				LOGGER.info(("%s -> New broadcast: %s"):format(ToStringPretty(self), ToStringPretty(content)))
+			end
 			return content
 		end,
 		---Find a subscriber by it's alias. Returns `nil`, `nil` if not found.

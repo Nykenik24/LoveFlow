@@ -1,3 +1,5 @@
+require("src.global")
+
 ---@class LoveFlow.Listener.Internal
 local listener = {}
 
@@ -6,7 +8,12 @@ function listener.new(event_bus)
 	---@field target LoveFlow.EventBus
 	local new_listener = {
 		target = event_bus,
+		_alreadyLogged = false,
 		listen = function(self, action)
+			if not self._alreadyLogged and SHOW_DEBUG_INFO then
+				self._alreadyLogged = true
+				LOGGER.info(("%s -> Listening to event bus %s"):format(ToStringPretty(self), ToStringPretty(event_bus)))
+			end
 			for _, broadcast in ipairs(self.target.pool.broadcasts) do
 				if type(broadcast) ~= "function" then
 					action(self, broadcast)
@@ -26,6 +33,9 @@ function listener.new(event_bus)
 			self.target = updated_bus
 		end,
 	}
+	if SHOW_DEBUG_INFO then
+		LOGGER.trace("Created new listener")
+	end
 	return new_listener
 end
 

@@ -1,3 +1,5 @@
+require("src.global")
+
 require("src.utils")
 
 ---@class LoveFlow.Subscriber.Internal
@@ -33,12 +35,23 @@ function sub.new(event_bus, alias)
 		---@param handler function
 		handleEvents = function(self, bus, handler)
 			if not handler then
+				if SHOW_DEBUG_INFO then
+					LOGGER.fatal(("%s -> No handler"):format(self.alias or ToStringPretty(self)))
+				end
 				error("No handler")
 			end
 			local events = self:getEvents(bus)
 			local function handle(content)
 				if type(content) ~= "function" then
 					if handler(self, content) == false then
+						if SHOW_DEBUG_INFO then
+							LOGGER.error(
+								("%s -> Handler for event (%s) returned false"):format(
+									self.alias or ToStringPretty(self),
+									ToStringPretty(content)
+								)
+							)
+						end
 						return false
 					end
 				end
@@ -68,17 +81,37 @@ function sub.new(event_bus, alias)
 		---@return LoveFlow.Subscriber Self For chaining
 		subscribe = function(self, pub)
 			if type(pub) == "table" then
+				if SHOW_DEBUG_INFO then
+					LOGGER.info(
+						("%s -> Subscribed to %s"):format(
+							self.alias or ToStringPretty(self),
+							pub.alias or pub.id or pub
+						)
+					)
+				end
 				table.insert(self.subbed_to, pub.id)
 				return self
 			elseif type(pub) == "string" then
 				table.insert(self.subbed_to, pub)
 				return self
 			else
+				if SHOW_DEBUG_INFO then
+					LOGGER.fatal(
+						("%s -> var `pub` has to be publisher id or publisher"):format(
+							self.alias or ToStringPretty(self)
+						)
+					)
+				end
 				error("pub has to be publisher id or publisher")
 			end
 		end,
 	}
 	table.insert(event_bus.subs, new_sub)
+	if SHOW_DEBUG_INFO and alias then
+		LOGGER.trace(("Created new subscriber: %s"):format(alias))
+	elseif SHOW_DEBUG_INFO then
+		LOGGER.trace("Created new subscriber")
+	end
 	return new_sub
 end
 

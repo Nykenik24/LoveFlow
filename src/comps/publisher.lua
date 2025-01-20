@@ -1,3 +1,5 @@
+require("src.global")
+
 require("src.utils")
 
 ---@class LoveFlow.Publisher.Internal
@@ -19,6 +21,9 @@ function pub.new(event_bus, alias)
 		---@param content any
 		---@return LoveFlow.Publisher Self For chaining
 		publish = function(self, content)
+			if SHOW_DEBUG_INFO then
+				LOGGER.info(("%s -> Published %s"):format(self.alias or self.id, ToStringPretty(content)))
+			end
 			table.insert(self.parent_bus.pool[self.id], 1, content)
 			return self
 		end,
@@ -31,6 +36,11 @@ function pub.new(event_bus, alias)
 	}
 	event_bus.pubs[new_pub.id] = new_pub
 	event_bus.pool[new_pub.id] = {} -- create event pool for publisher
+	if SHOW_DEBUG_INFO and alias then
+		LOGGER.trace(("Created new publisher: %s"):format(alias))
+	elseif SHOW_DEBUG_INFO then
+		LOGGER.trace("Created new publisher")
+	end
 	return new_pub
 end
 
