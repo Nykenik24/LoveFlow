@@ -1,4 +1,5 @@
 local bus = require("src.comps.bus")
+require("src.global")
 
 ---@class LoveFlow
 local loveflow = {}
@@ -14,6 +15,11 @@ function loveflow.newArch()
 		---@param self LoveFlow.Architecture
 		updateAll = function(self)
 			self.bus:update()
+		end,
+		---Show debug logs.
+		---@param show? boolean Don't set if you want to toggle debug logs.
+		showDebugInfo = function(show)
+			SHOW_DEBUG_INFO = show or not SHOW_DEBUG_INFO
 		end,
 	}
 	return arch
