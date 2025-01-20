@@ -50,3 +50,12 @@ end
 function Pop(t)
 	return table.remove(t, #t)
 end
+
+function ToStringPretty(val)
+	local val_to_string = tostring(val)
+	if type(val) == "table" then
+		return ("{%s}"):format(val_to_string:sub(#"table:  ", #val_to_string))
+	else
+		return val_to_string
+	end
+end
