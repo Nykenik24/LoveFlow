@@ -33,9 +33,9 @@ function bus.new()
 				publisher:update(self)
 			end
 		end,
-		newPublisher = require("src.comps.publisher").new,
-		newSubscriber = require("src.comps.subscriber").new,
-		newListener = require("src.comps.listener").new,
+		newPublisher = require(COMP_PATH .. "publisher").new,
+		newSubscriber = require(COMP_PATH .. "subscriber").new,
+		newListener = require(COMP_PATH .. "listener").new,
 		broadcast = function(self, content)
 			if type(content) == "table" then
 				content._isBroadcast = true -- to check if an event is a broadcast in your event handlers
