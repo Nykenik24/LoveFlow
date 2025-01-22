@@ -33,9 +33,25 @@ function bus.new()
 				publisher:update(self)
 			end
 		end,
-		newPublisher = require(COMP_PATH .. "publisher").new,
-		newSubscriber = require(COMP_PATH .. "subscriber").new,
-		newListener = require(COMP_PATH .. "listener").new,
+		---Create a new publisher.
+		---@param event_bus LoveFlow.EventBus
+		---@param alias? string Alias assigned
+		---@return LoveFlow.Publisher
+		newPublisher = function(event_bus, alias)
+			return require(COMP_PATH .. "publisher").new(event_bus, alias)
+		end,
+		---Create a new subscriber
+		---@param event_bus LoveFlow.EventBus
+		---@param alias? string Alias assigned
+		---@return LoveFlow.Subscriber
+		newSubscriber = function(event_bus, alias)
+			return require(COMP_PATH .. "subscriber").new(event_bus, alias)
+		end,
+		---@param event_bus LoveFlow.EventBus
+		---@return LoveFlow.Listener
+		newListener = function(event_bus)
+			return require(COMP_PATH .. "listener").new(event_bus)
+		end,
 		broadcast = function(self, content)
 			if type(content) == "table" then
 				content._isBroadcast = true -- to check if an event is a broadcast in your event handlers

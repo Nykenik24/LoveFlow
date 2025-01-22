@@ -7,6 +7,8 @@ require(getScriptFolder():gsub("/comps", "") .. "/global")
 ---@class LoveFlow.Listener.Internal
 local listener = {}
 
+---@param event_bus LoveFlow.EventBus
+---@return LoveFlow.Listener
 function listener.new(event_bus)
 	---@class LoveFlow.Listener
 	---@field target LoveFlow.EventBus
