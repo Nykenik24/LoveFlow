@@ -2,7 +2,7 @@ local function getScriptFolder() --* get the path from the root folder in which 
 	return (debug.getinfo(1, "S").source:sub(2):match("(.*/)"))
 end
 
-require(getScriptFolder() .. ".global")
+require(getScriptFolder() .. "/global")
 
 ---@class LoveFlow.Listener.Internal
 local listener = {}

@@ -4,7 +4,7 @@ end
 
 require(getScriptFolder() .. "global")
 
-local bus = require(PATH .. "comps.bus")
+local bus = require(PATH .. "comps/bus")
 
 ---@class LoveFlow
 local loveflow = {}

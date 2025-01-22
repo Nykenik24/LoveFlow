@@ -4,7 +4,7 @@ local function getScriptFolder() --* get the path from the root folder in which 
 	return (debug.getinfo(1, "S").source:sub(2):match("(.*/)"))
 end
 PATH = getScriptFolder()
-COMP_PATH = getScriptFolder() .. "comps."
+COMP_PATH = getScriptFolder() .. "comps/"
 UTILS_PATH = getScriptFolder() .. "utils"
 
-LOGGER = require(getScriptFolder() .. "lib.logger")
+LOGGER = require(getScriptFolder() .. "/lib/logger")
