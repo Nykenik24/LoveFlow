@@ -7,4 +7,4 @@ PATH = getScriptFolder()
 COMP_PATH = getScriptFolder() .. "comps/"
 UTILS_PATH = getScriptFolder() .. "utils"
 
-LOGGER = require(getScriptFolder() .. "lib/logger/init")
+LOGGER = require(getScriptFolder() .. "lib/loggy/init")
